@@ -1,92 +1,383 @@
 <!doctype html>
 
 <html lang="pt-BR">
+
 <head>
+
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#16a34a">
-<link rel="manifest" href="manifest.json">
+
+<meta name="viewport"
+content="width=device-width,initial-scale=1">
+
+<meta name="theme-color"
+content="#16a34a">
+
+<link rel="manifest"
+href="manifest.json">
+
+<title>LBS 3D - Gestão</title>
+
 
 <style>
-:root{--bg:#f1f5f9;--card:#fff;--text:#0f172a;--muted:#64748b;--green:#16a34a;--line:#e2e8f0}
-*{box-sizing:border-box}
-body{margin:0;font:15px Arial;background:var(--bg);color:var(--text)}
-header{height:64px;background:#0f172a;color:#fff;display:flex;align-items:center;gap:16px;padding:0 18px;position:sticky;top:0;z-index:5}
-header button{background:none;color:white;border:0;font-size:20px;cursor:pointer}
-header #install{margin-left:auto;background:var(--green);padding:8px 12px;border-radius:9px;font-size:14px}
-aside{position:fixed;top:64px;bottom:0;width:220px;background:#111827;padding:15px}
-aside button{display:block;width:100%;padding:12px;margin:4px 0;text-align:left;border:0;border-radius:8px;background:none;color:#e5e7eb;cursor:pointer}
-aside button:hover{background:#1f2937}
-main{margin-left:220px;padding:24px;max-width:1200px}
-.pg{display:none}
-.pg.on{display:block}
-.card,.cards>div{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:18px;margin-bottom:16px}
-.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.cards strong{display:block;font-size:23px;margin-top:8px}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-label{display:block;color:var(--muted);margin-bottom:10px}
-input{width:100%;padding:11px;border:1px solid var(--line);border-radius:8px;margin-top:5px;color:var(--text);background:white}
-.buttons{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}
-button{background:var(--green);color:white;border:0;border-radius:8px;padding:11px 14px;font-weight:bold;cursor:pointer}
-.result{margin-top:15px;padding:16px;background:#f8fafc;border-radius:10px;line-height:1.8}
-.big{font-size:26px;color:var(--green);font-weight:bold}
-table{width:100%;border-collapse:collapse}
-th,td{padding:9px;border-bottom:1px solid var(--line);text-align:left}
+
+:root{
+--bg:#f1f5f9;
+--card:#fff;
+--text:#0f172a;
+--muted:#64748b;
+--green:#16a34a;
+--line:#e2e8f0
+}
+
+*{
+box-sizing:border-box
+}
+
+body{
+margin:0;
+font:15px Arial;
+background:var(--bg);
+color:var(--text)
+}
+
+header{
+height:64px;
+background:#0f172a;
+color:#fff;
+display:flex;
+align-items:center;
+gap:16px;
+padding:0 18px;
+position:sticky;
+top:0;
+z-index:5
+}
+
+header button{
+background:none;
+color:white;
+border:0;
+font-size:20px;
+cursor:pointer
+}
+
+header #install{
+margin-left:auto;
+background:var(--green);
+padding:8px 12px;
+border-radius:9px;
+font-size:14px
+}
+
+aside{
+position:fixed;
+top:64px;
+bottom:0;
+width:220px;
+background:#111827;
+padding:15px
+}
+
+aside button{
+display:block;
+width:100%;
+padding:12px;
+margin:4px 0;
+text-align:left;
+border:0;
+border-radius:8px;
+background:none;
+color:#e5e7eb;
+cursor:pointer
+}
+
+aside button:hover{
+background:#1f2937
+}
+
+main{
+margin-left:220px;
+padding:24px;
+max-width:1200px
+}
+
+.pg{
+display:none
+}
+
+.pg.on{
+display:block
+}
+
+.card,
+.cards>div{
+background:var(--card);
+border:1px solid var(--line);
+border-radius:15px;
+padding:18px;
+margin-bottom:16px
+}
+
+.cards{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:12px
+}
+
+.cards strong{
+display:block;
+font-size:23px;
+margin-top:8px
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:14px
+}
+
+label{
+display:block;
+color:var(--muted);
+margin-bottom:10px
+}
+
+input{
+width:100%;
+padding:11px;
+border:1px solid var(--line);
+border-radius:8px;
+margin-top:5px;
+color:var(--text);
+background:white
+}
+
+.buttons{
+display:flex;
+gap:9px;
+flex-wrap:wrap;
+margin-top:12px
+}
+
+button{
+background:var(--green);
+color:white;
+border:0;
+border-radius:8px;
+padding:11px 14px;
+font-weight:bold;
+cursor:pointer
+}
+
+button.secondary{
+background:#475569
+}
+
+.result{
+margin-top:15px;
+padding:16px;
+background:#f8fafc;
+border-radius:10px;
+line-height:1.8
+}
+
+.big{
+font-size:26px;
+color:var(--green);
+font-weight:bold
+}
+
+.status{
+font-size:13px;
+color:var(--muted);
+margin-top:10px
+}
+
+table{
+width:100%;
+border-collapse:collapse
+}
+
+th,td{
+padding:9px;
+border-bottom:1px solid var(--line);
+text-align:left
+}
 
 @media(max-width:800px){
-aside{transform:translateX(-100%);transition:.2s}
-aside.open{transform:translateX(0)}
-main{margin:0;padding:15px}
-.grid{grid-template-columns:1fr}
-.cards{grid-template-columns:1fr 1fr}
+
+aside{
+transform:translateX(-100%);
+transition:.2s
+}
+
+aside.open{
+transform:translateX(0)
+}
+
+main{
+margin:0;
+padding:15px
+}
+
+.grid{
+grid-template-columns:1fr
+}
+
+.cards{
+grid-template-columns:1fr 1fr
+}
+
 }
 
 @media print{
-header,aside,.buttons{display:none!important}
-main{margin:0}
-.pg{display:none!important}
-.pg#orc{display:block!important}
+
+header,
+aside,
+.buttons{
+display:none!important
 }
+
+main{
+margin:0
+}
+
+.pg{
+display:none!important
+}
+
+.pg#orc{
+display:block!important
+}
+
+}
+
 </style>
 
-<title>LBS 3D</title>
 </head>
+
 
 <body>
 
+
 <header>
+
 <button onclick="menu()">☰</button>
+
 <b>LBS 3D</b>
-<button id="install" hidden>＋ Instalar</button>
+
+<button id="install" hidden>
+＋ Instalar
+</button>
+
 </header>
 
+
 <aside id="side">
-<button onclick="page('dash')">🏠 Dashboard</button>
-<button onclick="page('orc')">📋 Orçamento</button>
-<button onclick="page('vendas')">💰 Vendas</button>
-<button onclick="page('prod')">📦 Produtos</button>
-<button onclick="page('fil')">🧵 Filamentos</button>
-<button onclick="page('cli')">👥 Clientes</button>
-<button onclick="page('cfg')">⚙️ Configurações</button>
+
+<button onclick="page('dash')">
+🏠 Dashboard
+</button>
+
+<button onclick="page('orc')">
+📋 Orçamento
+</button>
+
+<button onclick="page('vendas')">
+💰 Vendas
+</button>
+
+<button onclick="page('prod')">
+📦 Produtos
+</button>
+
+<button onclick="page('fil')">
+🧵 Filamentos
+</button>
+
+<button onclick="page('cli')">
+👥 Clientes
+</button>
+
+<button onclick="page('cfg')">
+⚙️ Configurações
+</button>
+
 </aside>
+
 
 <main>
 
+
+<!-- DASHBOARD -->
+
 <section id="dash" class="pg on">
+
 <h1>Dashboard</h1>
 
 <div class="cards">
-<div>Faturamento<strong id="fat">R$ 0,00</strong></div>
-<div>Lucro<strong id="luc">R$ 0,00</strong></div>
-<div>Vendas<strong id="nv">0</strong></div>
-<div>Filamento<strong id="peso">0 g</strong></div>
+
+<div>
+Faturamento
+<strong id="fat">
+R$ 0,00
+</strong>
 </div>
 
-<div class="card">
-<h2>Últimas vendas</h2>
-<div id="last"></div>
+<div>
+Lucro
+<strong id="luc">
+R$ 0,00
+</strong>
 </div>
+
+<div>
+Vendas
+<strong id="nv">
+0
+</strong>
+</div>
+
+<div>
+Filamento
+<strong id="peso">
+0 g
+</strong>
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>Últimas vendas</h2>
+
+<div id="last">
+</div>
+
+<div class="buttons">
+
+<button onclick="sync()">
+☁️ Sincronizar
+</button>
+
+<button class="secondary"
+onclick="baixarVendas()">
+🔄 Atualizar
+</button>
+
+</div>
+
+<div id="syncStatus"
+class="status">
+</div>
+
+</div>
+
 </section>
+
+
+<!-- ORÇAMENTO -->
 
 <section id="orc" class="pg">
 
@@ -96,43 +387,138 @@ main{margin:0}
 
 <div class="grid">
 
-<label>Cliente <input id="cliente"> </label>
 
-<label>WhatsApp <input id="whats"> </label>
+<label>
+Cliente
+<input id="cliente">
+</label>
 
-<label>Produto <input id="produto"> </label>
 
-<label>Quantidade <input id="q" type="number" value="1"> </label>
+<label>
+WhatsApp
+<input id="whats">
+</label>
 
-<label>Peso por peça (g) <input id="g" type="number" value="100"> </label>
 
-<label>Tempo (h) <input id="h" type="number" step=".01" value="4"> </label>
+<label>
+Produto
+<input id="produto">
+</label>
 
-<label>Filamento R$/kg <input id="kg" type="number" value="75" step=".01"> </label>
 
-<label>Energia R$ <input id="energia" type="number" value="1.5" step=".01"> </label>
+<label>
+Quantidade
+<input id="q"
+type="number"
+value="1">
+</label>
 
-<label>Embalagem R$ <input id="emb" type="number" value="2" step=".01"> </label>
 
-<label>Outros R$ <input id="outros" type="number" value="0" step=".01"> </label>
+<label>
+Peso por peça (g)
+<input id="g"
+type="number"
+value="100">
+</label>
 
-<label>Máquina R$ <input id="maq" type="number" value="1" step=".01"> </label>
 
-<label>Margem % <input id="margem" type="number" value="150"> </label>
+<label>
+Tempo (h)
+<input id="h"
+type="number"
+step=".01"
+value="4">
+</label>
+
+
+<label>
+Filamento R$/kg
+<input id="kg"
+type="number"
+value="75"
+step=".01">
+</label>
+
+
+<label>
+Energia R$
+<input id="energia"
+type="number"
+value="1.5"
+step=".01">
+</label>
+
+
+<label>
+Embalagem R$
+<input id="emb"
+type="number"
+value="2"
+step=".01">
+</label>
+
+
+<label>
+Outros R$
+<input id="outros"
+type="number"
+value="0"
+step=".01">
+</label>
+
+
+<label>
+Máquina R$
+<input id="maq"
+type="number"
+value="1"
+step=".01">
+</label>
+
+
+<label>
+Margem %
+<input id="margem"
+type="number"
+value="150">
+</label>
+
 
 </div>
+
 
 <div class="buttons">
-<button onclick="calc()">Calcular</button>
-<button onclick="window.print()">🖨️ PDF</button>
-<button onclick="wa()">📱 WhatsApp</button>
-<button onclick="venda()">💰 Registrar venda</button>
+
+<button onclick="calc()">
+Calcular
+</button>
+
+<button onclick="window.print()">
+🖨️ PDF
+</button>
+
+<button onclick="wa()">
+📱 WhatsApp
+</button>
+
+<button onclick="venda()">
+💰 Registrar venda
+</button>
+
 </div>
 
-<div id="res" class="result"></div>
+
+<div id="res"
+class="result">
+</div>
+
 
 </div>
+
 </section>
+
+
+<!-- VENDAS -->
 
 <section id="vendas" class="pg">
 
@@ -141,14 +527,35 @@ main{margin:0}
 <div class="card">
 
 <div class="buttons">
-<button onclick="csv()">⬇️ CSV</button>
-<button onclick="sync()">☁️ Google Sheets</button>
+
+<button onclick="sync()">
+☁️ Sincronizar
+</button>
+
+<button class="secondary"
+onclick="baixarVendas()">
+🔄 Atualizar
+</button>
+
+<button onclick="csv()">
+⬇️ CSV
+</button>
+
 </div>
 
-<div id="vt"></div>
+<div id="vt">
+</div>
+
+<div id="syncStatus"
+class="status">
+</div>
 
 </div>
+
 </section>
+
+
+<!-- PRODUTOS -->
 
 <section id="prod" class="pg">
 
@@ -158,22 +565,45 @@ main{margin:0}
 
 <div class="grid">
 
-<label>Nome <input id="pn"> </label>
+<label>
+Nome
+<input id="pn">
+</label>
 
-<label>Peso g <input id="pg" type="number"> </label>
+<label>
+Peso g
+<input id="pg"
+type="number">
+</label>
 
-<label>Tempo h <input id="ph" type="number" step=".01"> </label>
+<label>
+Tempo h
+<input id="ph"
+type="number"
+step=".01">
+</label>
 
 </div>
+
 
 <div class="buttons">
-<button onclick="addProd()">Salvar</button>
+
+<button onclick="addProd()">
+Salvar
+</button>
+
 </div>
 
-<div id="pt"></div>
+
+<div id="pt">
+</div>
 
 </div>
+
 </section>
+
+
+<!-- FILAMENTOS -->
 
 <section id="fil" class="pg">
 
@@ -183,24 +613,50 @@ main{margin:0}
 
 <div class="grid">
 
-<label>Nome/cor <input id="fn"> </label>
+<label>
+Nome/cor
+<input id="fn">
+</label>
 
-<label>Fabricante <input id="ff"> </label>
+<label>
+Fabricante
+<input id="ff">
+</label>
 
-<label>R$/kg <input id="fk" type="number" step=".01"> </label>
+<label>
+R$/kg
+<input id="fk"
+type="number"
+step=".01">
+</label>
 
-<label>Estoque g <input id="fe" type="number"> </label>
+<label>
+Estoque g
+<input id="fe"
+type="number">
+</label>
 
 </div>
+
 
 <div class="buttons">
-<button onclick="addFil()">Salvar</button>
+
+<button onclick="addFil()">
+Salvar
+</button>
+
 </div>
 
-<div id="ft"></div>
+
+<div id="ft">
+</div>
 
 </div>
+
 </section>
+
+
+<!-- CLIENTES -->
 
 <section id="cli" class="pg">
 
@@ -210,20 +666,37 @@ main{margin:0}
 
 <div class="grid">
 
-<label>Nome <input id="cn"> </label>
+<label>
+Nome
+<input id="cn">
+</label>
 
-<label>WhatsApp <input id="cw"> </label>
+<label>
+WhatsApp
+<input id="cw">
+</label>
 
 </div>
+
 
 <div class="buttons">
-<button onclick="addCli()">Salvar</button>
+
+<button onclick="addCli()">
+Salvar
+</button>
+
 </div>
 
-<div id="ct"></div>
+
+<div id="ct">
+</div>
 
 </div>
+
 </section>
+
+
+<!-- CONFIGURAÇÕES -->
 
 <section id="cfg" class="pg">
 
@@ -231,255 +704,513 @@ main{margin:0}
 
 <div class="card">
 
-<label>Empresa <input id="empresa" value="LBS 3D"> </label>
+<label>
+Empresa
+<input id="empresa"
+value="LBS 3D">
+</label>
 
-<label>kWh R$ <input id="kwh" type="number" step=".01" value="1"> </label>
+
+<label>
+kWh R$
+<input id="kwh"
+type="number"
+step=".01"
+value="1">
+</label>
+
+
+<p class="status">
+Google Sheets conectado automaticamente.
+</p>
+
 
 <div class="buttons">
-<button onclick="saveCfg()">Salvar</button>
-<button onclick="wipe()">Apagar dados</button>
+
+<button onclick="saveCfg()">
+Salvar
+</button>
+
+<button onclick="wipe()">
+Apagar dados
+</button>
+
 </div>
 
 </div>
+
 </section>
+
 
 </main>
 
+
 <script>
 
-const K="lbs3d_pwa";
 
-/* URL FIXA DO GOOGLE APPS SCRIPT */
-const SCRIPT_URL="https://script.google.com/macros/s/AKfycbzhwwrzucFOPU-UK9kUzAOzsmOOZ-0cuunHohrCNflTb4PiX2sAGrYa2TI5cuX_oXr1rQ/exec";
+/* =====================================================
+   CONFIGURAÇÃO
+   ===================================================== */
+
+const K = "lbs3d_pwa";
 
 
-let db=JSON.parse(
+const SCRIPT_URL =
+"https://script.google.com/macros/s/AKfycbzhwwrzucFOPU-UK9kUzAOzsmOOZ-0cuunHohrCNflTb4PiX2sAGrYa2TI5cuX_oXr1rQ/exec";
+
+
+/* =====================================================
+   BANCO LOCAL
+   ===================================================== */
+
+let db = JSON.parse(
+
 localStorage.getItem(K) ||
+
 '{"vendas":[],"produtos":[],"filamentos":[],"clientes":[],"cfg":{"empresa":"LBS 3D","kwh":1}}'
+
 );
 
-let last=null;
 
-const M=n=>Number(n||0).toLocaleString("pt-BR",{
+let last = null;
+
+
+/* =====================================================
+   FUNÇÕES BÁSICAS
+   ===================================================== */
+
+const M = n =>
+
+Number(n || 0).toLocaleString(
+"pt-BR",
+{
 style:"currency",
 currency:"BRL"
-});
-
-const N=id=>Number(document.getElementById(id).value||0);
-
-const S=()=>localStorage.setItem(K,JSON.stringify(db));
+}
+);
 
 
-/* GERA ID ÚNICO DA VENDA */
+const N = id =>
+
+Number(
+document.getElementById(id).value || 0
+);
+
+
+const S = () =>
+
+localStorage.setItem(
+K,
+JSON.stringify(db)
+);
+
+
+/* =====================================================
+   ID ÚNICO
+   ===================================================== */
 
 function gerarID(){
 
-return "V" +
+return (
+
+"V" +
+
 Date.now().toString(36).toUpperCase() +
+
 "-" +
-Math.random().toString(36).substring(2,8).toUpperCase();
+
+Math.random()
+.toString(36)
+.substring(2,8)
+.toUpperCase()
+
+);
 
 }
 
 
-/* MENU */
+/* =====================================================
+   CORRIGE VENDAS ANTIGAS
+   ===================================================== */
+
+function garantirIDs(){
+
+let alterou = false;
+
+
+db.vendas.forEach(v => {
+
+if(!v.id){
+
+v.id = gerarID();
+
+alterou = true;
+
+}
+
+});
+
+
+if(alterou){
+
+S();
+
+}
+
+}
+
+
+/* =====================================================
+   MENU
+   ===================================================== */
 
 function menu(){
 
-document.getElementById("side").classList.toggle("open");
+document
+.getElementById("side")
+.classList
+.toggle("open");
 
 }
 
 
-/* PÁGINAS */
+/* =====================================================
+   PÁGINAS
+   ===================================================== */
 
 function page(id){
 
-document.querySelectorAll(".pg").forEach(x=>x.classList.remove("on"));
+document
+.querySelectorAll(".pg")
+.forEach(x =>
+x.classList.remove("on")
+);
 
-document.getElementById(id).classList.add("on");
 
-document.getElementById("side").classList.remove("open");
+document
+.getElementById(id)
+.classList.add("on");
 
-if(id=="dash")dash();
 
-if(id=="vendas")renderVendas();
+document
+.getElementById("side")
+.classList
+.remove("open");
 
-if(id=="prod")renderProd();
 
-if(id=="fil")renderFil();
+if(id === "dash")
+dash();
 
-if(id=="cli")renderCli();
+
+if(id === "vendas")
+renderVendas();
+
+
+if(id === "prod")
+renderProd();
+
+
+if(id === "fil")
+renderFil();
+
+
+if(id === "cli")
+renderCli();
 
 }
 
 
-/* CALCULAR */
+/* =====================================================
+   CALCULAR
+   ===================================================== */
 
 function calc(){
 
-let q=N("q");
+let q = N("q");
 
-let g=N("g");
+let g = N("g");
 
-let kg=N("kg");
+let kg = N("kg");
 
-let c=
-(g*q/1000)*kg+
-N("energia")+
-N("emb")+
-N("outros")+
+
+let c =
+
+(g*q/1000)*kg +
+
+N("energia") +
+
+N("emb") +
+
+N("outros") +
+
 N("maq");
 
-let v=c*(1+N("margem")/100);
+
+let v =
+
+c *
+(1 + N("margem")/100);
 
 
-/* CRIA A VENDA COM ID */
+last = {
 
-last={
-id:gerarID(),
-data:new Date().toISOString(),
-cliente:document.getElementById("cliente").value,
-whats:document.getElementById("whats").value,
-produto:document.getElementById("produto").value,
+id: gerarID(),
+
+data: new Date().toISOString(),
+
+cliente:
+document.getElementById("cliente").value,
+
+whats:
+document.getElementById("whats").value,
+
+produto:
+document.getElementById("produto").value,
+
 q:q,
+
 peso:g*q,
+
 horas:N("h"),
+
 custo:+c.toFixed(2),
+
 venda:+v.toFixed(2),
+
 lucro:+(v-c).toFixed(2),
+
 status:"Pendente"
+
 };
 
 
-document.getElementById("res").innerHTML=
+document.getElementById("res").innerHTML =
+
 `Custo total: <b>${M(c)}</b>
 <br>
 Lucro: <b>${M(v-c)}</b>
-<div class="big">Preço: ${M(v)}</div>`;
+<div class="big">
+Preço: ${M(v)}
+</div>`;
 
 }
 
 
-/* REGISTRAR VENDA */
+/* =====================================================
+   REGISTRAR VENDA
+   ===================================================== */
 
 function venda(){
 
-if(!last)calc();
+if(!last)
+calc();
 
-/* Se já existir ID, não duplica */
 
-if(db.vendas.some(v=>v.id===last.id)){
+if(
+db.vendas.some(
+v => v.id === last.id
+)
+){
 
-alert("Esta venda já foi registrada.");
+alert(
+"Esta venda já foi registrada."
+);
 
 return;
 
 }
 
+
 db.vendas.unshift(last);
 
 S();
 
-alert("Venda salva no dispositivo.");
+alert(
+"Venda salva no dispositivo."
+);
 
 dash();
 
 }
 
 
-/* WHATSAPP */
+/* =====================================================
+   WHATSAPP
+   ===================================================== */
 
 function wa(){
 
-if(!last)calc();
+if(!last)
+calc();
 
-open(
-"https://wa.me/?text="+
+
+window.open(
+
+"https://wa.me/?text=" +
+
 encodeURIComponent(
+
 `Olá! Orçamento LBS 3D
 Produto: ${last.produto}
 Quantidade: ${last.q}
 Valor: ${M(last.venda)}`
+
 )
+
 );
 
 }
 
 
-/* TABELA */
+/* =====================================================
+   TABELA
+   ===================================================== */
 
 function tab(a){
 
-if(!a.length)return"<p>Nenhum registro.</p>";
+if(!a.length)
+return "<p>Nenhum registro.</p>";
 
-return`
+
+return `
+
 <table>
+
 <tr>
+
 <th>Data</th>
+
 <th>Cliente</th>
+
 <th>Produto</th>
+
 <th>Venda</th>
+
 <th>Lucro</th>
+
 </tr>
-`+
-a.map(x=>`
+
+` +
+
+a.map(x => `
+
 <tr>
-<td>${new Date(x.data).toLocaleDateString("pt-BR")}</td>
-<td>${x.cliente}</td>
-<td>${x.produto}</td>
-<td>${M(x.venda)}</td>
-<td>${M(x.lucro)}</td>
+
+<td>
+${new Date(x.data)
+.toLocaleDateString("pt-BR")}
+</td>
+
+<td>
+${x.cliente || ""}
+</td>
+
+<td>
+${x.produto || ""}
+</td>
+
+<td>
+${M(x.venda)}
+</td>
+
+<td>
+${M(x.lucro)}
+</td>
+
 </tr>
-`).join("")+
+
+`).join("") +
+
 "</table>";
 
 }
 
 
-/* DASHBOARD */
+/* =====================================================
+   DASHBOARD
+   ===================================================== */
 
 function dash(){
 
-let v=db.vendas;
+let v = db.vendas;
 
-document.getElementById("fat").textContent=
-M(v.reduce((s,x)=>s+x.venda,0));
 
-document.getElementById("luc").textContent=
-M(v.reduce((s,x)=>s+x.lucro,0));
+document.getElementById("fat")
+.textContent =
+M(
+v.reduce(
+(s,x) => s + Number(x.venda || 0),
+0
+)
+);
 
-document.getElementById("nv").textContent=v.length;
 
-document.getElementById("peso").textContent=
-v.reduce((s,x)=>s+x.peso,0)+" g";
+document.getElementById("luc")
+.textContent =
+M(
+v.reduce(
+(s,x) => s + Number(x.lucro || 0),
+0
+)
+);
 
-document.getElementById("last").innerHTML=
-tab(v.slice(0,10));
+
+document.getElementById("nv")
+.textContent =
+v.length;
+
+
+document.getElementById("peso")
+.textContent =
+
+v.reduce(
+(s,x) => s + Number(x.peso || 0),
+0
+) + " g";
+
+
+document.getElementById("last")
+.innerHTML =
+tab(
+v.slice(0,10)
+);
 
 }
 
 
-/* VENDAS */
+/* =====================================================
+   VENDAS
+   ===================================================== */
 
 function renderVendas(){
 
-document.getElementById("vt").innerHTML=tab(db.vendas);
+document.getElementById("vt")
+.innerHTML =
+tab(db.vendas);
 
 }
 
 
-/* PRODUTOS */
+/* =====================================================
+   PRODUTOS
+   ===================================================== */
 
 function addProd(){
 
-let x={
-nome:pn.value,
-peso:N("pg"),
-horas:N("ph")
+let x = {
+
+nome: pn.value,
+
+peso: N("pg"),
+
+horas: N("ph")
+
 };
 
-if(!x.nome)return;
+
+if(!x.nome)
+return;
+
 
 db.produtos.push(x);
 
@@ -492,27 +1223,53 @@ renderProd();
 
 function renderProd(){
 
-pt.innerHTML=db.produtos.map((x,i)=>
-`<p>${x.nome} — ${x.peso}g — ${x.horas}h
-<button onclick="db.produtos.splice(${i},1);S();renderProd()">Excluir</button>
+pt.innerHTML =
+
+db.produtos.map(
+(x,i) =>
+
+`<p>
+${x.nome} —
+${x.peso}g —
+${x.horas}h
+
+<button onclick="
+db.produtos.splice(${i},1);
+S();
+renderProd();
+">
+Excluir
+</button>
+
 </p>`
+
 ).join("");
 
 }
 
 
-/* FILAMENTOS */
+/* =====================================================
+   FILAMENTOS
+   ===================================================== */
 
 function addFil(){
 
-let x={
+let x = {
+
 nome:fn.value,
+
 fab:ff.value,
+
 kg:N("fk"),
+
 estoque:N("fe")
+
 };
 
-if(!x.nome)return;
+
+if(!x.nome)
+return;
+
 
 db.filamentos.push(x);
 
@@ -525,25 +1282,49 @@ renderFil();
 
 function renderFil(){
 
-ft.innerHTML=db.filamentos.map((x,i)=>
-`<p>${x.nome} — ${M(x.kg)}/kg — ${x.estoque}g
-<button onclick="db.filamentos.splice(${i},1);S();renderFil()">Excluir</button>
+ft.innerHTML =
+
+db.filamentos.map(
+(x,i) =>
+
+`<p>
+${x.nome} —
+${M(x.kg)}/kg —
+${x.estoque}g
+
+<button onclick="
+db.filamentos.splice(${i},1);
+S();
+renderFil();
+">
+Excluir
+</button>
+
 </p>`
+
 ).join("");
 
 }
 
 
-/* CLIENTES */
+/* =====================================================
+   CLIENTES
+   ===================================================== */
 
 function addCli(){
 
-let x={
+let x = {
+
 nome:cn.value,
+
 whats:cw.value
+
 };
 
-if(!x.nome)return;
+
+if(!x.nome)
+return;
+
 
 db.clientes.push(x);
 
@@ -556,36 +1337,67 @@ renderCli();
 
 function renderCli(){
 
-ct.innerHTML=db.clientes.map((x,i)=>
-`<p>${x.nome} — ${x.whats}
-<button onclick="db.clientes.splice(${i},1);S();renderCli()">Excluir</button>
+ct.innerHTML =
+
+db.clientes.map(
+(x,i) =>
+
+`<p>
+${x.nome} —
+${x.whats}
+
+<button onclick="
+db.clientes.splice(${i},1);
+S();
+renderCli();
+">
+Excluir
+</button>
+
 </p>`
+
 ).join("");
 
 }
 
 
-/* CONFIGURAÇÕES */
+/* =====================================================
+   CONFIGURAÇÕES
+   ===================================================== */
 
 function saveCfg(){
 
-db.cfg={
-empresa:empresa.value,
-kwh:N("kwh")
+db.cfg = {
+
+empresa:
+empresa.value,
+
+kwh:
+N("kwh")
+
 };
+
 
 S();
 
-alert("Configurações salvas.");
+alert(
+"Configurações salvas."
+);
 
 }
 
 
-/* APAGAR DADOS */
+/* =====================================================
+   APAGAR DADOS LOCAIS
+   ===================================================== */
 
 function wipe(){
 
-if(confirm("Apagar todos os dados?")){
+if(
+confirm(
+"Apagar os dados deste dispositivo?"
+)
+){
 
 localStorage.removeItem(K);
 
@@ -596,13 +1408,28 @@ location.reload();
 }
 
 
-/* CSV */
+/* =====================================================
+   CSV
+   ===================================================== */
 
 function csv(){
 
-let rows=[
-["ID","Data","Cliente","Produto","Qtd","Peso","Custo","Venda","Lucro"],
-...db.vendas.map(x=>[
+let rows = [
+
+[
+"ID",
+"Data",
+"Cliente",
+"Produto",
+"Qtd",
+"Peso",
+"Custo",
+"Venda",
+"Lucro"
+],
+
+...db.vendas.map(x => [
+
 x.id,
 x.data,
 x.cliente,
@@ -612,116 +1439,432 @@ x.peso,
 x.custo,
 x.venda,
 x.lucro
+
 ])
+
 ];
 
-let t=rows.map(r=>r.join(";")).join("\n");
 
-let a=document.createElement("a");
+let t =
+rows
+.map(r => r.join(";"))
+.join("\n");
 
-a.href=URL.createObjectURL(
-new Blob(["\ufeff"+t],{type:"text/csv"})
+
+let a =
+document.createElement("a");
+
+
+a.href =
+URL.createObjectURL(
+
+new Blob(
+["\ufeff"+t],
+{
+type:"text/csv"
+}
+)
+
 );
 
-a.download="lbs3d-vendas.csv";
+
+a.download =
+"lbs3d-vendas.csv";
+
 
 a.click();
 
 }
 
 
-/* SINCRONIZAÇÃO */
+/* =====================================================
+   ENVIA PARA GOOGLE SHEETS
+   ===================================================== */
 
-async function sync(){
+async function enviarVendas(){
+
+garantirIDs();
+
 
 if(!db.vendas.length){
 
-alert("Não há vendas para sincronizar.");
-
-return;
+return {
+sucesso:true,
+adicionadas:0
+};
 
 }
+
+
+const resposta =
+
+await fetch(
+
+SCRIPT_URL,
+
+{
+
+method:"POST",
+
+headers:{
+"Content-Type":
+"text/plain;charset=utf-8"
+},
+
+body:JSON.stringify({
+
+vendas:db.vendas
+
+})
+
+}
+
+);
+
+
+return await resposta.json();
+
+}
+
+
+/* =====================================================
+   BAIXA TODAS AS VENDAS DA PLANILHA
+   ===================================================== */
+
+async function baixarVendas(){
+
+const status =
+document.getElementById("syncStatus");
+
+
+status.textContent =
+"🔄 Buscando vendas da nuvem...";
 
 
 try{
 
-const r=await fetch(
-SCRIPT_URL,
-{
-method:"POST",
-headers:{
-"Content-Type":"text/plain;charset=utf-8"
-},
-body:JSON.stringify({
-vendas:db.vendas
-})
-}
+const resposta =
+
+await fetch(
+SCRIPT_URL + "?acao=vendas"
 );
 
 
-const resposta=await r.text();
+const dados =
+await resposta.json();
 
-alert(resposta);
+
+if(!dados.sucesso){
+
+throw new Error(
+dados.erro ||
+"Erro ao buscar vendas."
+);
+
+}
+
+
+/*
+ * Junta as vendas locais
+ * com as vendas da nuvem.
+ */
+
+const mapa =
+new Map();
+
+
+db.vendas.forEach(v => {
+
+if(v.id)
+mapa.set(v.id,v);
+
+});
+
+
+dados.vendas.forEach(v => {
+
+if(v.id){
+
+mapa.set(v.id,v);
+
+}
+
+});
+
+
+db.vendas =
+Array.from(
+mapa.values()
+);
+
+
+/*
+ * Ordena pelas mais recentes.
+ */
+
+db.vendas.sort(
+(a,b) =>
+new Date(b.data) -
+new Date(a.data)
+);
+
+
+S();
+
+dash();
+
+renderVendas();
+
+
+status.textContent =
+"✅ Dados atualizados. " +
+db.vendas.length +
+" venda(s) no total.";
 
 
 }catch(e){
 
 console.error(e);
 
-alert("Erro de conexão com o Google Sheets.");
+status.textContent =
+"❌ Erro ao atualizar.";
+
+alert(
+"Não foi possível buscar as vendas do Google Sheets."
+);
 
 }
 
 }
 
 
-/* INICIALIZAÇÃO */
+/* =====================================================
+   SINCRONIZAÇÃO COMPLETA
+   ===================================================== */
 
-document.addEventListener("DOMContentLoaded",()=>{
+async function sync(){
 
-empresa.value=db.cfg.empresa||"LBS 3D";
+const status =
+document.getElementById("syncStatus");
 
-kwh.value=db.cfg.kwh||1;
+
+status.textContent =
+"☁️ Sincronizando...";
+
+
+try{
+
+
+/*
+ * Primeiro envia as vendas locais.
+ */
+
+const envio =
+await enviarVendas();
+
+
+if(!envio.sucesso){
+
+throw new Error(
+envio.erro ||
+"Erro ao enviar vendas."
+);
+
+}
+
+
+/*
+ * Depois baixa todas as vendas
+ * existentes na planilha.
+ */
+
+const resposta =
+
+await fetch(
+SCRIPT_URL + "?acao=vendas"
+);
+
+
+const dados =
+await resposta.json();
+
+
+if(!dados.sucesso){
+
+throw new Error(
+dados.erro ||
+"Erro ao buscar vendas."
+);
+
+}
+
+
+/*
+ * Junta tudo usando o ID.
+ */
+
+const mapa =
+new Map();
+
+
+db.vendas.forEach(v => {
+
+if(v.id){
+
+mapa.set(v.id,v);
+
+}
+
+});
+
+
+dados.vendas.forEach(v => {
+
+if(v.id){
+
+mapa.set(v.id,v);
+
+}
+
+});
+
+
+db.vendas =
+Array.from(
+mapa.values()
+);
+
+
+db.vendas.sort(
+(a,b) =>
+new Date(b.data) -
+new Date(a.data)
+);
+
+
+S();
 
 dash();
 
+renderVendas();
+
+
+status.textContent =
+
+"✅ Sincronizado! " +
+
+db.vendas.length +
+
+" venda(s) disponíveis.";
+
+
+}catch(e){
+
+console.error(e);
+
+status.textContent =
+"❌ Erro de sincronização.";
+
+
+alert(
+"Erro ao sincronizar com o Google Sheets.\n\n" +
+e.message
+);
+
+}
+
+}
+
+
+/* =====================================================
+   INICIALIZAÇÃO
+   ===================================================== */
+
+document.addEventListener(
+"DOMContentLoaded",
+async () => {
+
+empresa.value =
+db.cfg.empresa ||
+"LBS 3D";
+
+
+kwh.value =
+db.cfg.kwh ||
+1;
+
+
+garantirIDs();
+
+dash();
+
+
+/*
+ * Busca as vendas da nuvem
+ * automaticamente ao abrir.
+ */
+
+try{
+
+await baixarVendas();
+
+}catch(e){
+
+console.log(
+"Não foi possível atualizar automaticamente."
+);
+
+}
+
 });
 
 
-/* INSTALAÇÃO PWA */
+/* =====================================================
+   PWA
+   ===================================================== */
 
 let deferred;
 
-window.addEventListener("beforeinstallprompt",e=>{
+
+window.addEventListener(
+"beforeinstallprompt",
+e => {
 
 e.preventDefault();
 
-deferred=e;
+deferred = e;
 
-install.hidden=false;
+install.hidden = false;
 
 });
 
 
-install.onclick=async()=>{
+install.onclick =
+async () => {
 
 if(deferred){
 
 deferred.prompt();
 
-deferred=null;
+deferred = null;
 
 }
 
 };
 
+
 </script>
+
 
 <script>
 
-navigator.serviceWorker?.register("sw.js");
+navigator.serviceWorker?.register(
+"sw.js"
+);
 
 </script>
 
+
 </body>
+
 </html>
