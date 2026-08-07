@@ -1,0 +1,10 @@
+{
+  "name":"LBS 3D - Gestão",
+  "short_name":"LBS 3D",
+  "start_url":"./",
+  "scope":"./",
+  "display":"standalone",
+  "background_color":"#0f172a",
+  "theme_color":"#16a34a",
+  "lang":"pt-BR"
+}
