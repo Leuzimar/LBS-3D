@@ -3,20 +3,11 @@
 <html lang="pt-BR">
 
 <head>
-
 <meta charset="utf-8">
-
-<meta name="viewport"
-content="width=device-width,initial-scale=1">
-
-<meta name="theme-color"
-content="#16a34a">
-
-<link rel="manifest"
-href="manifest.json">
-
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#16a34a">
+<link rel="manifest" href="manifest.json">
 <title>LBS 3D - Gestão</title>
-
 
 <style>
 
@@ -29,9 +20,7 @@ href="manifest.json">
 --line:#e2e8f0
 }
 
-*{
-box-sizing:border-box
-}
+*{box-sizing:border-box}
 
 body{
 margin:0;
@@ -101,13 +90,8 @@ padding:24px;
 max-width:1200px
 }
 
-.pg{
-display:none
-}
-
-.pg.on{
-display:block
-}
+.pg{display:none}
+.pg.on{display:block}
 
 .card,
 .cards>div{
@@ -204,6 +188,64 @@ border-bottom:1px solid var(--line);
 text-align:left
 }
 
+
+/* JANELA DE REGISTRO */
+
+.modal{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.55);
+z-index:100;
+align-items:center;
+justify-content:center;
+padding:20px
+}
+
+.modal.show{
+display:flex
+}
+
+.modal-box{
+background:white;
+width:100%;
+max-width:400px;
+border-radius:16px;
+padding:22px;
+box-shadow:0 15px 40px rgba(0,0,0,.25)
+}
+
+.modal-box h2{
+margin-top:0
+}
+
+.modal-info{
+background:#f8fafc;
+border-radius:10px;
+padding:12px;
+margin:12px 0;
+line-height:1.7
+}
+
+.modal-actions{
+display:flex;
+gap:10px;
+margin-top:16px
+}
+
+.modal-actions button{
+flex:1
+}
+
+.btn-cancel{
+background:#64748b
+}
+
+.valor-input{
+font-size:22px;
+font-weight:bold
+}
+
 @media(max-width:800px){
 
 aside{
@@ -256,9 +298,7 @@ display:block!important
 
 </head>
 
-
 <body>
-
 
 <header>
 
@@ -271,7 +311,6 @@ display:block!important
 </button>
 
 </header>
-
 
 <aside id="side">
 
@@ -305,9 +344,7 @@ display:block!important
 
 </aside>
 
-
 <main>
-
 
 <!-- DASHBOARD -->
 
@@ -319,41 +356,31 @@ display:block!important
 
 <div>
 Faturamento
-<strong id="fat">
-R$ 0,00
-</strong>
+<strong id="fat">R$ 0,00</strong>
 </div>
 
 <div>
 Lucro
-<strong id="luc">
-R$ 0,00
-</strong>
+<strong id="luc">R$ 0,00</strong>
 </div>
 
 <div>
 Vendas
-<strong id="nv">
-0
-</strong>
+<strong id="nv">0</strong>
 </div>
 
 <div>
 Filamento
-<strong id="peso">
-0 g
-</strong>
+<strong id="peso">0 g</strong>
 </div>
 
 </div>
-
 
 <div class="card">
 
 <h2>Últimas vendas</h2>
 
-<div id="last">
-</div>
+<div id="last"></div>
 
 <div class="buttons">
 
@@ -361,21 +388,17 @@ Filamento
 ☁️ Sincronizar
 </button>
 
-<button class="secondary"
-onclick="baixarVendas()">
+<button class="secondary" onclick="baixarVendas()">
 🔄 Atualizar
 </button>
 
 </div>
 
-<div id="syncStatus"
-class="status">
-</div>
+<div id="syncStatus" class="status"></div>
 
 </div>
 
 </section>
-
 
 <!-- ORÇAMENTO -->
 
@@ -387,105 +410,67 @@ class="status">
 
 <div class="grid">
 
-
 <label>
 Cliente
 <input id="cliente">
 </label>
-
 
 <label>
 WhatsApp
 <input id="whats">
 </label>
 
-
 <label>
 Produto
 <input id="produto">
 </label>
 
-
 <label>
 Quantidade
-<input id="q"
-type="number"
-value="1">
+<input id="q" type="number" value="1">
 </label>
-
 
 <label>
 Peso por peça (g)
-<input id="g"
-type="number"
-value="100">
+<input id="g" type="number" value="100">
 </label>
-
 
 <label>
 Tempo (h)
-<input id="h"
-type="number"
-step=".01"
-value="4">
+<input id="h" type="number" step=".01" value="4">
 </label>
-
 
 <label>
 Filamento R$/kg
-<input id="kg"
-type="number"
-value="75"
-step=".01">
+<input id="kg" type="number" value="75" step=".01">
 </label>
-
 
 <label>
 Energia R$
-<input id="energia"
-type="number"
-value="1.5"
-step=".01">
+<input id="energia" type="number" value="1.5" step=".01">
 </label>
-
 
 <label>
 Embalagem R$
-<input id="emb"
-type="number"
-value="2"
-step=".01">
+<input id="emb" type="number" value="2" step=".01">
 </label>
-
 
 <label>
 Outros R$
-<input id="outros"
-type="number"
-value="0"
-step=".01">
+<input id="outros" type="number" value="0" step=".01">
 </label>
-
 
 <label>
 Máquina R$
-<input id="maq"
-type="number"
-value="1"
-step=".01">
+<input id="maq" type="number" value="1" step=".01">
 </label>
-
 
 <label>
 Margem %
-<input id="margem"
-type="number"
-value="150">
+<input id="margem" type="number" value="150">
 </label>
 
-
 </div>
-
 
 <div class="buttons">
 
@@ -501,22 +486,17 @@ Calcular
 📱 WhatsApp
 </button>
 
-<button onclick="venda()">
+<button onclick="abrirRegistroVenda()">
 💰 Registrar venda
 </button>
 
 </div>
 
-
-<div id="res"
-class="result">
-</div>
-
+<div id="res" class="result"></div>
 
 </div>
 
 </section>
-
 
 <!-- VENDAS -->
 
@@ -532,8 +512,7 @@ class="result">
 ☁️ Sincronizar
 </button>
 
-<button class="secondary"
-onclick="baixarVendas()">
+<button class="secondary" onclick="baixarVendas()">
 🔄 Atualizar
 </button>
 
@@ -543,17 +522,13 @@ onclick="baixarVendas()">
 
 </div>
 
-<div id="vt">
-</div>
+<div id="vt"></div>
 
-<div id="syncStatus"
-class="status">
-</div>
+<div id="syncStatus" class="status"></div>
 
 </div>
 
 </section>
-
 
 <!-- PRODUTOS -->
 
@@ -572,19 +547,15 @@ Nome
 
 <label>
 Peso g
-<input id="pg"
-type="number">
+<input id="pg" type="number">
 </label>
 
 <label>
 Tempo h
-<input id="ph"
-type="number"
-step=".01">
+<input id="ph" type="number" step=".01">
 </label>
 
 </div>
-
 
 <div class="buttons">
 
@@ -594,14 +565,11 @@ Salvar
 
 </div>
 
-
-<div id="pt">
-</div>
+<div id="pt"></div>
 
 </div>
 
 </section>
-
 
 <!-- FILAMENTOS -->
 
@@ -625,19 +593,15 @@ Fabricante
 
 <label>
 R$/kg
-<input id="fk"
-type="number"
-step=".01">
+<input id="fk" type="number" step=".01">
 </label>
 
 <label>
 Estoque g
-<input id="fe"
-type="number">
+<input id="fe" type="number">
 </label>
 
 </div>
-
 
 <div class="buttons">
 
@@ -647,14 +611,11 @@ Salvar
 
 </div>
 
-
-<div id="ft">
-</div>
+<div id="ft"></div>
 
 </div>
 
 </section>
-
 
 <!-- CLIENTES -->
 
@@ -678,7 +639,6 @@ WhatsApp
 
 </div>
 
-
 <div class="buttons">
 
 <button onclick="addCli()">
@@ -687,14 +647,11 @@ Salvar
 
 </div>
 
-
-<div id="ct">
-</div>
+<div id="ct"></div>
 
 </div>
 
 </section>
-
 
 <!-- CONFIGURAÇÕES -->
 
@@ -706,24 +663,17 @@ Salvar
 
 <label>
 Empresa
-<input id="empresa"
-value="LBS 3D">
+<input id="empresa" value="LBS 3D">
 </label>
-
 
 <label>
 kWh R$
-<input id="kwh"
-type="number"
-step=".01"
-value="1">
+<input id="kwh" type="number" step=".01" value="1">
 </label>
-
 
 <p class="status">
 Google Sheets conectado automaticamente.
 </p>
-
 
 <div class="buttons">
 
@@ -741,16 +691,84 @@ Apagar dados
 
 </section>
 
-
 </main>
 
+<!-- MODAL REGISTRAR VENDA -->
+
+<div id="modalVenda" class="modal">
+
+<div class="modal-box">
+
+<h2>💰 Registrar venda</h2>
+
+<div class="modal-info">
+
+Produto: <b id="modalProduto">-</b>
+
+<br>
+
+Quantidade: <b id="modalQtd">-</b>
+
+<br>
+
+Custo: <b id="modalCusto">R$ 0,00</b>
+
+<br>
+
+Preço calculado: <b id="modalCalculado">R$ 0,00</b>
+
+</div>
+
+<label>
+
+Valor que será vendido
+
+<input
+id="valorVenda"
+class="valor-input"
+type="number"
+step="0.01"
+min="0"
+placeholder="0,00"
+
+>
+
+</label>
+
+<div class="modal-info">
+
+Lucro da venda: <b id="modalLucro">R$ 0,00</b>
+
+</div>
+
+<div class="modal-actions">
+
+<button
+class="btn-cancel"
+onclick="fecharRegistroVenda()">
+
+Cancelar
+
+</button>
+
+<button onclick="confirmarVenda()">
+
+Registrar
+
+</button>
+
+</div>
+
+</div>
+
+</div>
 
 <script>
 
 
 /* =====================================================
-   CONFIGURAÇÃO
-   ===================================================== */
+CONFIGURAÇÃO
+===================================================== */
 
 const K = "lbs3d_pwa";
 
@@ -760,8 +778,8 @@ const SCRIPT_URL =
 
 
 /* =====================================================
-   BANCO LOCAL
-   ===================================================== */
+BANCO LOCAL
+===================================================== */
 
 let db = JSON.parse(
 
@@ -776,8 +794,8 @@ let last = null;
 
 
 /* =====================================================
-   FUNÇÕES BÁSICAS
-   ===================================================== */
+FUNÇÕES BÁSICAS
+===================================================== */
 
 const M = n =>
 
@@ -806,8 +824,8 @@ JSON.stringify(db)
 
 
 /* =====================================================
-   ID ÚNICO
-   ===================================================== */
+ID ÚNICO
+===================================================== */
 
 function gerarID(){
 
@@ -830,13 +848,12 @@ Math.random()
 
 
 /* =====================================================
-   CORRIGE VENDAS ANTIGAS
-   ===================================================== */
+GARANTIR IDS
+===================================================== */
 
 function garantirIDs(){
 
 let alterou = false;
-
 
 db.vendas.forEach(v => {
 
@@ -850,7 +867,6 @@ alterou = true;
 
 });
 
-
 if(alterou){
 
 S();
@@ -861,8 +877,8 @@ S();
 
 
 /* =====================================================
-   MENU
-   ===================================================== */
+MENU
+===================================================== */
 
 function menu(){
 
@@ -875,8 +891,8 @@ document
 
 
 /* =====================================================
-   PÁGINAS
-   ===================================================== */
+PÁGINAS
+===================================================== */
 
 function page(id){
 
@@ -886,33 +902,26 @@ document
 x.classList.remove("on")
 );
 
-
 document
 .getElementById(id)
 .classList.add("on");
-
 
 document
 .getElementById("side")
 .classList
 .remove("open");
 
-
 if(id === "dash")
 dash();
-
 
 if(id === "vendas")
 renderVendas();
 
-
 if(id === "prod")
 renderProd();
 
-
 if(id === "fil")
 renderFil();
-
 
 if(id === "cli")
 renderCli();
@@ -921,8 +930,8 @@ renderCli();
 
 
 /* =====================================================
-   CALCULAR
-   ===================================================== */
+CALCULAR
+===================================================== */
 
 function calc(){
 
@@ -990,21 +999,239 @@ document.getElementById("res").innerHTML =
 <br>
 Lucro: <b>${M(v-c)}</b>
 <div class="big">
-Preço: ${M(v)}
+Preço sugerido: ${M(v)}
 </div>`;
 
 }
 
 
 /* =====================================================
-   REGISTRAR VENDA
-   ===================================================== */
+ABRIR REGISTRO DE VENDA
+===================================================== */
 
-function venda(){
+function abrirRegistroVenda(){
 
-if(!last)
+if(!last){
+
 calc();
 
+}
+
+
+/*
+Se mesmo depois do cálculo
+não existir uma venda válida,
+não abre.
+*/
+
+if(!last){
+
+alert(
+"Faça o cálculo antes de registrar a venda."
+);
+
+return;
+
+}
+
+
+/*
+Preenche as informações da janela.
+*/
+
+document.getElementById("modalProduto")
+.textContent =
+last.produto || "Sem produto";
+
+
+document.getElementById("modalQtd")
+.textContent =
+last.q;
+
+
+document.getElementById("modalCusto")
+.textContent =
+M(last.custo);
+
+
+document.getElementById("modalCalculado")
+.textContent =
+M(last.venda);
+
+
+/*
+Coloca o preço calculado
+como valor inicial.
+*/
+
+const campo =
+document.getElementById("valorVenda");
+
+
+campo.value =
+Number(last.venda).toFixed(2);
+
+
+/*
+Calcula o lucro inicial.
+*/
+
+atualizarLucroModal();
+
+
+document
+.getElementById("modalVenda")
+.classList
+.add("show");
+
+
+setTimeout(() => {
+
+campo.focus();
+
+campo.select();
+
+},100);
+
+}
+
+
+/* =====================================================
+ATUALIZAR LUCRO NO MODAL
+===================================================== */
+
+function atualizarLucroModal(){
+
+if(!last)
+return;
+
+
+const valor =
+Number(
+document.getElementById("valorVenda").value || 0
+);
+
+
+const lucro =
+valor -
+Number(last.custo || 0);
+
+
+document.getElementById("modalLucro")
+.textContent =
+M(lucro);
+
+}
+
+
+/*
+Atualiza o lucro enquanto digita.
+*/
+
+document
+.getElementById("valorVenda")
+.addEventListener(
+"input",
+atualizarLucroModal
+);
+
+
+/* =====================================================
+FECHAR MODAL
+===================================================== */
+
+function fecharRegistroVenda(){
+
+document
+.getElementById("modalVenda")
+.classList
+.remove("show");
+
+}
+
+
+/* =====================================================
+CONFIRMAR VENDA
+===================================================== */
+
+function confirmarVenda(){
+
+if(!last){
+
+alert(
+"Não existe uma venda para registrar."
+);
+
+return;
+
+}
+
+
+const valor =
+Number(
+document.getElementById("valorVenda").value || 0
+);
+
+
+if(valor <= 0){
+
+alert(
+"Digite um valor de venda válido."
+);
+
+document
+.getElementById("valorVenda")
+.focus();
+
+return;
+
+}
+
+
+/*
+Atualiza o valor real da venda.
+*/
+
+last.venda =
+Number(valor.toFixed(2));
+
+
+/*
+Calcula o lucro real.
+*/
+
+last.lucro =
+Number(
+(
+last.venda -
+Number(last.custo || 0)
+).toFixed(2)
+);
+
+
+/*
+Muda o status.
+*/
+
+last.status =
+"Registrada";
+
+
+/*
+Garante ID.
+*/
+
+if(!last.id){
+
+last.id =
+gerarID();
+
+}
+
+
+/*
+Evita duplicação local.
+*/
 
 if(
 db.vendas.some(
@@ -1016,18 +1243,31 @@ alert(
 "Esta venda já foi registrada."
 );
 
+fecharRegistroVenda();
+
 return;
 
 }
 
 
+/*
+Salva.
+*/
+
 db.vendas.unshift(last);
 
 S();
 
+
+fecharRegistroVenda();
+
+
 alert(
-"Venda salva no dispositivo."
+"Venda registrada por " +
+M(last.venda) +
+"."
 );
+
 
 dash();
 
@@ -1035,14 +1275,13 @@ dash();
 
 
 /* =====================================================
-   WHATSAPP
-   ===================================================== */
+WHATSAPP
+===================================================== */
 
 function wa(){
 
 if(!last)
 calc();
-
 
 window.open(
 
@@ -1063,8 +1302,8 @@ Valor: ${M(last.venda)}`
 
 
 /* =====================================================
-   TABELA
-   ===================================================== */
+TABELA
+===================================================== */
 
 function tab(a){
 
@@ -1127,8 +1366,8 @@ ${M(x.lucro)}
 
 
 /* =====================================================
-   DASHBOARD
-   ===================================================== */
+DASHBOARD
+===================================================== */
 
 function dash(){
 
@@ -1179,8 +1418,8 @@ v.slice(0,10)
 
 
 /* =====================================================
-   VENDAS
-   ===================================================== */
+VENDAS
+===================================================== */
 
 function renderVendas(){
 
@@ -1192,8 +1431,8 @@ tab(db.vendas);
 
 
 /* =====================================================
-   PRODUTOS
-   ===================================================== */
+PRODUTOS
+===================================================== */
 
 function addProd(){
 
@@ -1210,7 +1449,6 @@ horas: N("ph")
 
 if(!x.nome)
 return;
-
 
 db.produtos.push(x);
 
@@ -1249,8 +1487,8 @@ Excluir
 
 
 /* =====================================================
-   FILAMENTOS
-   ===================================================== */
+FILAMENTOS
+===================================================== */
 
 function addFil(){
 
@@ -1269,7 +1507,6 @@ estoque:N("fe")
 
 if(!x.nome)
 return;
-
 
 db.filamentos.push(x);
 
@@ -1308,8 +1545,8 @@ Excluir
 
 
 /* =====================================================
-   CLIENTES
-   ===================================================== */
+CLIENTES
+===================================================== */
 
 function addCli(){
 
@@ -1324,7 +1561,6 @@ whats:cw.value
 
 if(!x.nome)
 return;
-
 
 db.clientes.push(x);
 
@@ -1362,8 +1598,8 @@ Excluir
 
 
 /* =====================================================
-   CONFIGURAÇÕES
-   ===================================================== */
+CONFIGURAÇÕES
+===================================================== */
 
 function saveCfg(){
 
@@ -1377,7 +1613,6 @@ N("kwh")
 
 };
 
-
 S();
 
 alert(
@@ -1388,8 +1623,8 @@ alert(
 
 
 /* =====================================================
-   APAGAR DADOS LOCAIS
-   ===================================================== */
+APAGAR DADOS LOCAIS
+===================================================== */
 
 function wipe(){
 
@@ -1409,8 +1644,8 @@ location.reload();
 
 
 /* =====================================================
-   CSV
-   ===================================================== */
+CSV
+===================================================== */
 
 function csv(){
 
@@ -1478,8 +1713,8 @@ a.click();
 
 
 /* =====================================================
-   ENVIA PARA GOOGLE SHEETS
-   ===================================================== */
+ENVIAR VENDAS
+===================================================== */
 
 async function enviarVendas(){
 
@@ -1528,8 +1763,8 @@ return await resposta.json();
 
 
 /* =====================================================
-   BAIXA TODAS AS VENDAS DA PLANILHA
-   ===================================================== */
+BAIXAR VENDAS
+===================================================== */
 
 async function baixarVendas(){
 
@@ -1564,11 +1799,6 @@ dados.erro ||
 }
 
 
-/*
- * Junta as vendas locais
- * com as vendas da nuvem.
- */
-
 const mapa =
 new Map();
 
@@ -1583,11 +1813,8 @@ mapa.set(v.id,v);
 
 dados.vendas.forEach(v => {
 
-if(v.id){
-
+if(v.id)
 mapa.set(v.id,v);
-
-}
 
 });
 
@@ -1597,10 +1824,6 @@ Array.from(
 mapa.values()
 );
 
-
-/*
- * Ordena pelas mais recentes.
- */
 
 db.vendas.sort(
 (a,b) =>
@@ -1629,18 +1852,14 @@ console.error(e);
 status.textContent =
 "❌ Erro ao atualizar.";
 
-alert(
-"Não foi possível buscar as vendas do Google Sheets."
-);
-
 }
 
 }
 
 
 /* =====================================================
-   SINCRONIZAÇÃO COMPLETA
-   ===================================================== */
+SINCRONIZAÇÃO COMPLETA
+===================================================== */
 
 async function sync(){
 
@@ -1653,11 +1872,6 @@ status.textContent =
 
 
 try{
-
-
-/*
- * Primeiro envia as vendas locais.
- */
 
 const envio =
 await enviarVendas();
@@ -1672,11 +1886,6 @@ envio.erro ||
 
 }
 
-
-/*
- * Depois baixa todas as vendas
- * existentes na planilha.
- */
 
 const resposta =
 
@@ -1699,32 +1908,22 @@ dados.erro ||
 }
 
 
-/*
- * Junta tudo usando o ID.
- */
-
 const mapa =
 new Map();
 
 
 db.vendas.forEach(v => {
 
-if(v.id){
-
+if(v.id)
 mapa.set(v.id,v);
-
-}
 
 });
 
 
 dados.vendas.forEach(v => {
 
-if(v.id){
-
+if(v.id)
 mapa.set(v.id,v);
-
-}
 
 });
 
@@ -1752,9 +1951,7 @@ renderVendas();
 status.textContent =
 
 "✅ Sincronizado! " +
-
 db.vendas.length +
-
 " venda(s) disponíveis.";
 
 
@@ -1764,7 +1961,6 @@ console.error(e);
 
 status.textContent =
 "❌ Erro de sincronização.";
-
 
 alert(
 "Erro ao sincronizar com o Google Sheets.\n\n" +
@@ -1777,8 +1973,8 @@ e.message
 
 
 /* =====================================================
-   INICIALIZAÇÃO
-   ===================================================== */
+INICIALIZAÇÃO
+===================================================== */
 
 document.addEventListener(
 "DOMContentLoaded",
@@ -1788,21 +1984,14 @@ empresa.value =
 db.cfg.empresa ||
 "LBS 3D";
 
-
 kwh.value =
 db.cfg.kwh ||
 1;
-
 
 garantirIDs();
 
 dash();
 
-
-/*
- * Busca as vendas da nuvem
- * automaticamente ao abrir.
- */
 
 try{
 
@@ -1811,7 +2000,7 @@ await baixarVendas();
 }catch(e){
 
 console.log(
-"Não foi possível atualizar automaticamente."
+"Atualização automática indisponível."
 );
 
 }
@@ -1820,8 +2009,8 @@ console.log(
 
 
 /* =====================================================
-   PWA
-   ===================================================== */
+PWA
+===================================================== */
 
 let deferred;
 
@@ -1852,9 +2041,7 @@ deferred = null;
 
 };
 
-
 </script>
-
 
 <script>
 
@@ -1864,7 +2051,5 @@ navigator.serviceWorker?.register(
 
 </script>
 
-
 </body>
-
 </html>
